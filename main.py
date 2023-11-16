@@ -1,5 +1,9 @@
 import socket
 import struct
+import sys
+
+from PySide6.QtWidgets import *
+
 
 class Message:
     def __init__(self):
@@ -36,7 +40,8 @@ class Server:
             while True:
                 data, client_address = self.server_socket.recvfrom(1024)
                 print(f"Received data from {client_address}: {data.decode('utf-8')}")
-
+                message = Message()
+                message = self.unpack_data(data)
                 response = "Hello, client!"
                 self.server_socket.sendto(response.encode('utf-8'), client_address)
         except KeyboardInterrupt:
@@ -44,6 +49,16 @@ class Server:
         finally:
             self.server_socket.close()
 
+class Window(QWidget):
+    def __init__(self, parent = None, *args, **kwargs):
+
+        super().__init__(parent, *args, **kwargs)
+        self.show()
+
+
 if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = Window()
     server = Server('localhost', 12345)
     server.run()
+    app.exec_()
