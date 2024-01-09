@@ -36,6 +36,38 @@ class Server:
 
         return message
 
+    def handle_request(self, data, client_address):
+        message = self.unpack_data(data)
+
+        if message.code == 1:  # GET
+            print(f"Received CoAP GET request from {client_address}")
+            response_payload = "Hello, client!"
+            response = struct.pack(f'!BBBHQ{len(message.token)}s{len(response_payload)}s',
+                                   message.version, 2, 0, 205, message.message_id, message.token,
+                                   response_payload.encode('utf-8'))
+            self.server_socket.sendto(response, client_address)
+        elif message.code == 2:  # POST
+            print(f"Received CoAP POST request from {client_address}")
+            response_payload = "success"
+            response = struct.pack(f'!BBBHQ{len(message.token)}s{len(response_payload)}s',
+                                   message.version, 2, 0, 205, message.message_id, message.token,
+                                   response_payload.encode('utf-8'))
+            self.server_socket.sendto(response, client_address)
+        elif message.code == 3:  # PUT
+            print(f"Received CoAP PUT request from {client_address}")
+            response_payload = "success"
+            response = struct.pack(f'!BBBHQ{len(message.token)}s{len(response_payload)}s',
+                                   message.version, 2, 0, 205, message.message_id, message.token,
+                                   response_payload.encode('utf-8'))
+            self.server_socket.sendto(response, client_address)
+        elif message.code == 4:  # DELETE
+            print(f"Received CoAP DELETE request from {client_address}")
+            response_payload = "success"
+            response = struct.pack(f'!BBBHQ{len(message.token)}s{len(response_payload)}s',
+                                   message.version, 2, 0, 205, message.message_id, message.token,
+                                   response_payload.encode('utf-8'))
+            self.server_socket.sendto(response, client_address)
+
 
     def run(self):
         try:
