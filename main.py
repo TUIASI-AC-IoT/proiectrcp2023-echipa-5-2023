@@ -4,6 +4,8 @@ import sys
 
 from PySide6.QtWidgets import *
 
+from interfaceQt import Ui_Form
+
 
 class Message:
     def __init__(self):
@@ -51,8 +53,9 @@ class Server:
 
 class Window(QWidget):
     def __init__(self, parent = None, *args, **kwargs):
-
         super().__init__(parent, *args, **kwargs)
+        ui = Ui_Form()
+        ui.setupUi(self)
         self.show()
 
 
