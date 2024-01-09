@@ -13,3 +13,17 @@ def delete_file(folder_path, file_name):
         print(f"The specified file does not exist: {file_path}")
     return False
 
+import os
+
+def create_empty_file(folder_path, file_name):
+    file_path = os.path.join(folder_path, file_name)
+    try:
+        with open(file_path, 'w'):
+            pass
+        print(f"Created empty file: {file_path}")
+        return True
+    except OSError as e:
+        print(f"Failed to create empty file: {file_path}. {e}")
+        return False
+
+
