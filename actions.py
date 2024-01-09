@@ -26,4 +26,17 @@ def create_empty_file(folder_path, file_name):
         print(f"Failed to create empty file: {file_path}. {e}")
         return False
 
+import os
+
+def update_file(folder_path, file_name, new_content):
+    file_path = os.path.join(folder_path, file_name)
+    try:
+        with open(file_path, 'a') as file:
+            file.write(new_content + "\n")
+        print(f"Appended new content to file: {file_path}")
+        return True
+    except OSError as e:
+        print(f"Failed to update file: {file_path}. {e}")
+        return False
+
 
