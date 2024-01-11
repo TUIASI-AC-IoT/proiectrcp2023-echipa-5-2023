@@ -75,7 +75,6 @@ class Server:
     def handle_request(self, data, client_address):
         message = self.unpack_data(data)
         if message:
-            #Payload is a string with format "action;folder_path;file_name;[content]"
             try:
                 parts = message.payload.decode('utf-8').split(';')
                 action = parts[0]
