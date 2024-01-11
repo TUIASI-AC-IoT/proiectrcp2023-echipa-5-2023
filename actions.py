@@ -14,6 +14,7 @@ def delete_file(folder_path, file_name):
     return False
 
 def create_empty_file(folder_path, file_name):
+    os.makedirs(folder_path, exist_ok=True) 
     file_path = os.path.join(folder_path, file_name)
     try:
         with open(file_path, 'w'):
